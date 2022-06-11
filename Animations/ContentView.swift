@@ -8,21 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    @State private var animationAmount = 0.0
-    
+    @State private var isShowingRed = false
+
     var body: some View {
-        Button("Tap Me") {
-            // Action
-            withAnimation(.interpolatingSpring(stiffness: 5, damping: 1)) {
-                animationAmount += 360
+        ZStack {
+            Rectangle()
+                .fill(.blue)
+                .frame(width: 200, height: 200)
+
+            if isShowingRed {
+                Rectangle()
+                    .fill(.red)
+                    .frame(width: 200, height: 200)
+                    //.transition(.pivot)
             }
         }
-        .padding(50)
-        .background(.red)
-        .foregroundColor(.white)
-        .clipShape(Circle())
-        .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 1, z: 0))
+        .onTapGesture {
+            withAnimation {
+                isShowingRed.toggle()
+            }
+        }
     }
 }
 
